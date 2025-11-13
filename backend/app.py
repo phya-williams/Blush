@@ -3,21 +3,26 @@ import json
 import datetime
 import os
 
-app = Flask(__name__, static_folder="web", static_url_path="", template_folder="web")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_FOLDER = os.path.join(BASE_DIR, "../frontend")
+DATA_FILE = os.path.join(BASE_DIR, "blush_data.json")
 
-DATA_FILE = "blush_data.json"
+app = Flask(__name__, static_folder=FRONTEND_FOLDER, static_url_path="", template_folder=FRONTEND_FOLDER)
 
 if not os.path.exists(DATA_FILE):
     with open(DATA_FILE, "w") as file:
         json.dump({"users": {}}, file)
 
+
 @app.route("/")
 def home():
+    """Serve the main frontend page"""
     return app.send_static_file("index.html")
 
 
 @app.route("/data", methods=["GET", "POST"])
 def data():
+    """Handles mood data GET and POST"""
     with open(DATA_FILE, "r") as file:
         data = json.load(file)
 
@@ -43,9 +48,8 @@ def data():
             json.dump(data, file, indent=2)
 
         response_data = {"username": username, "moods": data["users"][username]["moods"]}
-        print("📤 Sending JSON to client:", json.dumps(response_data, indent=2))
+        print("Sending JSON to client:", json.dumps(response_data, indent=2))
 
-        # ✅ Explicit JSON response with headers
         response = make_response(jsonify(response_data))
         response.headers["Content-Type"] = "application/json"
         return response
@@ -58,7 +62,6 @@ def data():
     response = make_response(jsonify(response_data))
     response.headers["Content-Type"] = "application/json"
     return response
-
 
 
 if __name__ == "__main__":
