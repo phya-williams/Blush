@@ -1,0 +1,28 @@
+body {
+    font-family: 'Bebas Neue', 'Oswald', 'Raleway', 'Exo 2', sans-serif;
+    background: repeating-linear-gradient(120deg, #fa9ee8, #FF99B4);
+    color: #2a1414;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin: 30px auto;
+    width: 90%;
+    max-width: 600px;
+    background: #ffd2f0;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(255, 105, 180, 0.2);
+}
+
+h1 {
+    color: #a80369;
+}
+
+#quote {
+    font-style: italic;
+    margin-top: 20px 0;
+    color: #d6336c;
+}
